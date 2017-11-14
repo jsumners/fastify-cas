@@ -19,7 +19,7 @@ const fastify = require('fastify')()
 fastify
   .register('fastify-cookie') // see module readme for required options
   .register('fastify-caching') // see module readme for required options
-  .register('fastify-server-session, {
+  .register('fastify-server-session', {
     secretKey: '12345678901234567890123456789012' // see module readme for required options
   })
   .register('fastify-cas', {
