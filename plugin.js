@@ -87,7 +87,7 @@ function casAuthPlugin (fastify, options, next) {
 
       const redirectPath = req.session.cas.requestPath || opts.defaultRedirect
       session.requestPath = undefined
-      reply.redirect(redirectPath)
+      reply.code(303).redirect(redirectPath)
     })
   })
 

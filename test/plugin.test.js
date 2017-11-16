@@ -66,7 +66,7 @@ test('handles authorization', (t) => {
     nock('http://cas.example.com')
       .get('/login')
       .query(true)
-      .reply(302, '', {
+      .reply(303, '', {
         location: `${url}/casauth?ticket=ST-123456`
       })
 
@@ -124,7 +124,7 @@ test('handles broken sessions due to missing cookie on ticket validate', (t) => 
     nock('http://cas.example.com')
       .get('/login')
       .query(true)
-      .reply(302, '', {
+      .reply(303, '', {
         location: `${url}/casauth?ticket=ST-123456`
       })
 
