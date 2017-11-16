@@ -1,6 +1,6 @@
 {
   "name": "fastify-cas",
-  "version": "1.0.0-pre.2",
+  "version": "1.0.0-pre.3",
   "description": "A plugin to provide authentication via the CAS protocol",
   "main": "plugin.js",
   "scripts": {
