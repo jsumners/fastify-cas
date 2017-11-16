@@ -7,6 +7,7 @@ const defaultOptions = {
   appBaseUrl: undefined,
   endpointPath: '/casauth',
   unauthorizedEndpoint: '/unauthorized',
+  defaultRedirect: '/oops',
   strictSSL: true,
   casServer: {
     baseUrl: undefined,
@@ -27,9 +28,7 @@ function casAuthPlugin (fastify, options, next) {
   // This preHandler is used to determine if the current request is
   // authenticated or not. If not, it ships the client over to the remote CAS
   // server for authentication.
-  fastify.addHook('preHandler', function (req, reply, next) {
-    if (req.query && req.query.ticket) return next()
-
+  fastify.addHook('preHandler', function fastifyCasPreHandler (req, reply, next) {
     const session = req.session
     if (!session.cas) {
       session.cas = {
@@ -38,6 +37,8 @@ function casAuthPlugin (fastify, options, next) {
         attributes: undefined
       }
     }
+
+    if (req.query && req.query.ticket) return next()
 
     if (session.cas.authenticated) {
       req.log.trace('cas authenticated via session')
@@ -84,7 +85,7 @@ function casAuthPlugin (fastify, options, next) {
 
       session.authenticated = true
 
-      const redirectPath = req.session.cas.requestPath
+      const redirectPath = req.session.cas.requestPath || opts.defaultRedirect
       session.requestPath = undefined
       reply.redirect(redirectPath)
     })

@@ -50,6 +50,10 @@ application so the plugin can build URLs.
 handle communications with the remote CAS server.
 + `unauthorizedEndpoint` (Default: `/unauthorized`): where to send users if
 authentication fails due to a rejection.
++ `defaultRedirect` (Default: `'/oops'`): where to send clients if they have
+attempted to access the `endpointPath` without a valid session available, e.g.
+they bookmarked the remote CAS server login page. This endpoint must be
+provided by the parent application.
 + `strictSSL` (Default: `true`): determines if TLS certificates will be
 validated when communicating with the remote CAS server.
 + `casServer` [required]: specifies information about the remote CAS server.

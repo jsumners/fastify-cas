@@ -30,7 +30,10 @@
   "homepage": "https://github.com/jsumners/fastify-cas#readme",
   "devDependencies": {
     "clear-require": "^2.0.0",
-    "fastify": "^0.33.0",
+    "fastify": "^0.34.0",
+    "fastify-caching": "^1.1.0",
+    "fastify-cookie": "^1.1.1",
+    "fastify-server-session": "^1.0.2",
     "freeport": "^1.0.5",
     "nock": "^9.1.0",
     "pre-commit": "^1.2.2",
