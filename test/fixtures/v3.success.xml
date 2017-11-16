@@ -1,0 +1,10 @@
+<cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
+  <cas:authenticationSuccess>
+    <cas:user>foouser</cas:user>
+    <cas:attributes>
+      <cas:fullname>A Test User</cas:fullname>
+    </cas:attributes>
+    <!-- emulate non-conformant servers for session.cas.raw -->
+    <user_uuid>1234567-ghsld</user_uuid>
+  </cas:authenticationSuccess>
+</cas:serviceResponse>

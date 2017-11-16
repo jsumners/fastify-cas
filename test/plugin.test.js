@@ -7,6 +7,7 @@ const request = require('request')
 const nock = require('nock')
 const freeport = require('freeport')
 const mockPlugins = require('./mocks/plugins')
+const fixtures = require('./fixtures')
 const plugin = require('../')
 
 test('redirects to remote server', (t) => {
@@ -43,7 +44,7 @@ test('redirects to remote server', (t) => {
   })
 })
 
-test('handles authorization', (t) => {
+test('handles v1 authorization', (t) => {
   t.plan(1)
 
   const server = fastify()
@@ -80,6 +81,63 @@ test('handles authorization', (t) => {
       if (err) t.threw(err)
 
       server.get('/foo', (req, reply) => {
+        reply.send({hello: 'world'})
+      })
+
+      request(`${url}/foo`, (err, res, body) => {
+        if (err) t.threw(err)
+        t.deepEqual(JSON.parse(body), {hello: 'world'})
+      })
+    })
+  })
+})
+
+test('handles v3 authorization', (t) => {
+  t.plan(10)
+
+  freeport((err, port) => {
+    if (err) t.threw(err)
+    const url = `http://127.0.0.1:${port}`
+    const server = fastify()
+    server
+      .register(mockPlugins.cookiePlugin)
+      .register(mockPlugins.cachingPlugin)
+      .register(mockPlugins.sessionPlugin)
+      .register(plugin, {
+        appBaseUrl: url,
+        casServer: {
+          baseUrl: 'http://cas.example.com',
+          version: 3
+        }
+      })
+
+    nock('http://cas.example.com')
+      .get('/login')
+      .query(true)
+      .reply(303, '', {
+        location: `${url}/casauth?ticket=ST-123456`
+      })
+
+    nock('http://cas.example.com')
+      .get('/p3/serviceValidate')
+      .query(true)
+      .reply(200, fixtures.v3.success)
+
+    server.listen(port, (err) => {
+      server.server.unref()
+      if (err) t.threw(err)
+
+      server.get('/foo', (req, reply) => {
+        const cas = req.session.cas
+        t.type(cas, Object)
+        t.ok(cas.attributes)
+        t.type(cas.attributes, Object)
+        t.ok(cas.attributes.fullname)
+        t.is(cas.attributes.fullname, 'A Test User')
+        t.ok(cas.memberOf)
+        t.type(cas.memberOf, Array)
+        t.ok(cas.user)
+        t.is(cas.user, 'foouser')
         reply.send({hello: 'world'})
       })
 

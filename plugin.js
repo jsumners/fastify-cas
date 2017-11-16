@@ -78,7 +78,7 @@ function casAuthPlugin (fastify, options, next) {
         session.user = result.response.user
       }
 
-      if (opts.casServer.version > 3) {
+      if (opts.casServer.version > 2) {
         session.attributes = result.response.attributes
         session.memberOf = result.response.memberOf || []
       }
