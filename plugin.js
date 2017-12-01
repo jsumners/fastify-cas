@@ -41,12 +41,13 @@ function casAuthPlugin (fastify, options, next) {
     if (req.query && req.query.ticket) return next()
 
     if (session.cas.authenticated) {
-      req.log.trace('cas authenticated via session')
+      req.log.trace('cas authenticated via session: %j', session.cas)
       return next()
     }
 
     req.log.trace('cas authentication required')
     session.cas.requestPath = req.urlData('path')
+    req.log.trace('cas session: %j', session.cas)
     reply.redirect(cas.loginUrl)
   })
 
@@ -85,6 +86,7 @@ function casAuthPlugin (fastify, options, next) {
 
       session.authenticated = true
 
+      req.log.trace('cas session: %j', req.session.cas)
       const redirectPath = req.session.cas.requestPath || opts.defaultRedirect
       session.requestPath = undefined
       reply.code(303).redirect(redirectPath)
