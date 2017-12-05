@@ -93,7 +93,7 @@ test('handles v1 authorization', (t) => {
 })
 
 test('handles v3 authorization', (t) => {
-  t.plan(10)
+  t.plan(12)
 
   freeport((err, port) => {
     if (err) t.threw(err)
@@ -136,6 +136,8 @@ test('handles v3 authorization', (t) => {
         t.is(cas.attributes.fullname, 'A Test User')
         t.ok(cas.memberOf)
         t.type(cas.memberOf, Array)
+        t.is(cas.memberOf.length, 1)
+        t.is(cas.memberOf[0], 'group1')
         t.ok(cas.user)
         t.is(cas.user, 'foouser')
         reply.send({hello: 'world'})

@@ -82,6 +82,7 @@ function casAuthPlugin (fastify, options, next) {
       if (opts.casServer.version > 2) {
         session.attributes = result.response.attributes
         session.memberOf = result.response.memberOf || []
+        if (session.attributes.memberOf) Array.prototype.push.apply(session.memberOf, session.attributes.memberOf)
       }
 
       session.authenticated = true

@@ -3,6 +3,7 @@
     <cas:user>foouser</cas:user>
     <cas:attributes>
       <cas:fullname>A Test User</cas:fullname>
+      <cas:memberOf>group1</cas:memberOf>
     </cas:attributes>
     <!-- emulate non-conformant servers for session.cas.raw -->
     <user_uuid>1234567-ghsld</user_uuid>
