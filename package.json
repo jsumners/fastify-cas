@@ -30,24 +30,24 @@
   "homepage": "https://github.com/jsumners/fastify-cas#readme",
   "devDependencies": {
     "clear-require": "^2.0.0",
-    "fastify": "^0.35.5",
-    "fastify-caching": "^2.0.0",
-    "fastify-cookie": "^1.1.2",
-    "fastify-server-session": "^1.0.5",
+    "fastify": "^1.0.0-rc.1",
+    "fastify-caching": "^2.0.3",
+    "fastify-cookie": "^1.2.1",
+    "fastify-server-session": "^1.0.6",
     "freeport": "^1.0.5",
-    "nock": "^9.1.4",
+    "nock": "^9.1.6",
     "pre-commit": "^1.2.2",
     "proxyquire": "^1.8.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3",
-    "tap": "^11.0.0"
+    "tap": "^11.1.0"
   },
   "dependencies": {
     "abstract-logging": "^1.0.0",
-    "fastify-plugin": "^0.1.1",
-    "fastify-url-data": "^1.1.0",
+    "fastify-plugin": "^0.2.2",
+    "fastify-url-data": "^1.1.1",
     "merge-options": "^1.0.0",
-    "query-string": "^5.0.1",
+    "query-string": "^5.1.0",
     "request": "^2.83.0",
     "xml2js": "^0.4.19"
   }

@@ -76,13 +76,13 @@ test('handles v1 authorization', (t) => {
       .query(true)
       .reply(200, 'yes\n')
 
+    server.get('/foo', (req, reply) => {
+      reply.send({hello: 'world'})
+    })
+
     server.listen(port, (err) => {
       server.server.unref()
       if (err) t.threw(err)
-
-      server.get('/foo', (req, reply) => {
-        reply.send({hello: 'world'})
-      })
 
       request(`${url}/foo`, (err, res, body) => {
         if (err) t.threw(err)
@@ -123,25 +123,25 @@ test('handles v3 authorization', (t) => {
       .query(true)
       .reply(200, fixtures.v3.success)
 
+    server.get('/foo', (req, reply) => {
+      const cas = req.session.cas
+      t.type(cas, Object)
+      t.ok(cas.attributes)
+      t.type(cas.attributes, Object)
+      t.ok(cas.attributes.fullname)
+      t.is(cas.attributes.fullname, 'A Test User')
+      t.ok(cas.memberOf)
+      t.type(cas.memberOf, Array)
+      t.is(cas.memberOf.length, 1)
+      t.is(cas.memberOf[0], 'group1')
+      t.ok(cas.user)
+      t.is(cas.user, 'foouser')
+      reply.send({hello: 'world'})
+    })
+
     server.listen(port, (err) => {
       server.server.unref()
       if (err) t.threw(err)
-
-      server.get('/foo', (req, reply) => {
-        const cas = req.session.cas
-        t.type(cas, Object)
-        t.ok(cas.attributes)
-        t.type(cas.attributes, Object)
-        t.ok(cas.attributes.fullname)
-        t.is(cas.attributes.fullname, 'A Test User')
-        t.ok(cas.memberOf)
-        t.type(cas.memberOf, Array)
-        t.is(cas.memberOf.length, 1)
-        t.is(cas.memberOf[0], 'group1')
-        t.ok(cas.user)
-        t.is(cas.user, 'foouser')
-        reply.send({hello: 'world'})
-      })
 
       request(`${url}/foo`, (err, res, body) => {
         if (err) t.threw(err)
@@ -193,13 +193,13 @@ test('handles broken sessions due to missing cookie on ticket validate', (t) => 
       .query(true)
       .reply(200, 'yes\n')
 
+    server.get('/foo', (req, reply) => {
+      reply.send({hello: 'world'})
+    })
+
     server.listen(port, (err) => {
       server.server.unref()
       if (err) t.threw(err)
-
-      server.get('/foo', (req, reply) => {
-        reply.send({hello: 'world'})
-      })
 
       // Weeeeeee! The CAS protocol is fun!
       // We're using `http.get` here so because it is a _little_ less verbose.

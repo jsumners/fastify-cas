@@ -97,4 +97,10 @@ function casAuthPlugin (fastify, options, next) {
   next()
 }
 
-module.exports = fp(casAuthPlugin, '>=0.33.0')
+module.exports = fp(casAuthPlugin, {
+  fastify: '>=1.0.0-rc.1',
+  name: 'fastify-cas',
+  decorators: {
+    request: ['session']
+  }
+})
