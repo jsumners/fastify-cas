@@ -13,6 +13,9 @@ for other parameters (e.g. `gateway`).
 
 ## Example
 
+A fully working example application can be found at
+[https://github.com/jsumners/fastify-cas-example](https://github.com/jsumners/fastify-cas-example).
+
 ```js
 const fastify = require('fastify')()
 
